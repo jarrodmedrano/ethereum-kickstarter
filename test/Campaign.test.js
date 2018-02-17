@@ -40,9 +40,33 @@ describe('Campaigns', () => {
   });
 
   it('marks caller as the campaign manager', async () => {
-      //manager method is public
+      //manager method is public, call manager method
       const manager = await campaign.methods.manager().call();
+      //is the manager the same as account[0]?
       assert.equal(accounts[0], manager);
   });
 
+  it('allows people to contribute money and marks them as approvers', async () => {
+    await campaign.methods.contribute().send({
+      value: '200',
+      from: accounts[1]
+    });
+    //is contributor should be a boolean value
+    const isContributor = await campaign.methods.approvers(accounts[1]).call();
+    //will return true or false
+    assert(isContributor);
+  })
+
+  it('requires a minimum contribution', async() => {
+    try {
+      //send 5, which is too little, and catch an error
+      await campaign.methods.contribute().send({
+        value: '5',
+        from: accounts[1]
+      });
+      assert(false);
+    } catch (err) {
+      assert(err)
+    }
+  })
 });
