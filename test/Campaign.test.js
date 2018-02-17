@@ -55,7 +55,7 @@ describe('Campaigns', () => {
     const isContributor = await campaign.methods.approvers(accounts[1]).call();
     //will return true or false
     assert(isContributor);
-  })
+  });
 
   it('requires a minimum contribution', async() => {
     try {
@@ -68,5 +68,19 @@ describe('Campaigns', () => {
     } catch (err) {
       assert(err)
     }
-  })
+  });
+
+  it('allows a manager to make a payment request', async () => {
+    //send message, with a certain amount of wei, from account 1
+    await campaign.methods.createRequest('Buy batteries', '100', accounts[1])
+      .send({
+        from: accounts[0],
+        gas: '1000000'
+      });
+    //go back into contract and pull out request that was made
+    //a request is a struct, a collection of key value pairs
+    //we can only ask for individual values but we cannot get everything at once
+    const request = await campaign.methods.requests(0).call();
+    assert.equal('Buy batteries', request.description);
+  });
 });
