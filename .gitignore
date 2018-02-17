@@ -8,7 +8,7 @@ src/config/dev.js
 
 # production
 /build
-
+ethereum/config/dev.js
 # misc
 .DS_Store
 .env.local
