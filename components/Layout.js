@@ -4,7 +4,7 @@ import Header from './Header';
 
 export default props  => {
   return (
-    <Container>
+    <Container style={{paddingTop: "10px"}}>
       <Header />
       {props.children}
       <h1>I'm a footer</h1>
