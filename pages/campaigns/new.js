@@ -13,6 +13,8 @@ class CampaignNew extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
+    this.setState({ loading: true, errorMessage: '' })
+
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
@@ -21,7 +23,7 @@ class CampaignNew extends Component {
           from: accounts[0]
         })
     } catch (err) {
-        this.setState({errorMessage: err.message})
+        this.setState({errorMessage: err.message, loading: false})
     }
   }
 
@@ -37,7 +39,7 @@ class CampaignNew extends Component {
             <Input label="wei" labelPosition="right" value={this.state.minimumContribution} onChange={event => this.setState({minimumContribution: event.target.value})} />
           </Form.Field>
           <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button primary>Create!</Button>
+          <Button loading={this.state.loading} primary>Create!</Button>
         </Form>
       </Layout>
     );
