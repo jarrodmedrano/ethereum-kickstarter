@@ -5,7 +5,9 @@ import web3 from '../ethereum/web3';
 
 class ContributeForm extends Component {
   state = {
-    value: ''
+    value: '',
+    errorMessage: '',
+    loading: false
   };
 
   onSubmit = async event => {
@@ -32,7 +34,7 @@ class ContributeForm extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.onSubmit}>
+      <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
         <Form.Field>
           <label>Amount to Contribute</label>
           <Input
@@ -42,7 +44,8 @@ class ContributeForm extends Component {
             labelPosition="right"
           />
         </Form.Field>
-        <Button primary>
+        <Message error header="Oops!" content={this.state.errorMessage} />
+        <Button primary loading={this.state.loading}>
           Contribute!
         </Button>
       </Form>
