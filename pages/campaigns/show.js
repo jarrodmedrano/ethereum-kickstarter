@@ -74,6 +74,11 @@ class CampaignShow extends Component {
         <Grid>
           <Grid.Column width={10}>
             {this.renderCards()}
+            <Link route={`/campaigns/${this.props.address}/requests`}>
+              <a>
+                <Button primary>View Requests</Button>
+              </a>
+            </Link>
           </Grid.Column>
           <Grid.Column width={6}>
             <ContributeForm address={this.props.address} />
