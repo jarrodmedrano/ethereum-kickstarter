@@ -8,7 +8,6 @@ src/config/dev.js
 
 # production
 /build
-ethereum/config/dev.js
 .next
 # misc
 .DS_Store
